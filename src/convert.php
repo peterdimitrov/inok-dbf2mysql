@@ -360,8 +360,12 @@ class convert {
       }
     }
     if (count($lines)) {
+      // Flush outside transaction
+      $this->db->exec("FLUSH TABLES");
+  
+      // Now transactional DDL
       $this->db->beginTransaction();
-      $this->db->exec("FLUSH TABLES; ALTER TABLE `".$this->dbfHeaders["table"]."` ".implode(", ", $lines).";");
+      $this->db->exec("ALTER TABLE `".$this->dbfHeaders["table"]."` ".implode(", ", $lines));
       $this->db->commit();
     }
     unset($lines);
