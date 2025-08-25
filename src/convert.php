@@ -364,9 +364,7 @@ class convert {
       $this->db->exec("FLUSH TABLES");
   
       // Now transactional DDL
-      $this->db->beginTransaction();
       $this->db->exec("ALTER TABLE `".$this->dbfHeaders["table"]."` ".implode(", ", $lines));
-      $this->db->commit();
     }
     unset($lines);
   }
